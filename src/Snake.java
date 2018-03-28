@@ -68,9 +68,8 @@ public class Snake {
     public void itemColisionCheckUpdate(ArrayList<ItemComponent> items){
         for(int i = 0; i<items.size();i++){
             if(SnakeComponent.doComponentsColide(snakeHead, items.get(i))){
-                System.out.println("haha");
                 items.remove(i);
-                items.add(new ItemComponent());
+                ItemComponent.addItemComponent(items);
                 addComponent(NUMBER_OF_COMPONENTS_ADDED_AFTER_COLISION_WITH_ITEM);
 
             }

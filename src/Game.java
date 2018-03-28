@@ -58,7 +58,7 @@ public class Game {
         drawGame.setLayout(null);
 
         for(int i =0; i<NUMBER_OF_ITEMS;i++) {
-            items.add(new ItemComponent());
+            ItemComponent.addItemComponent(items);
         }
 
         window.frame.getContentPane().add(drawGame);
