@@ -10,27 +10,25 @@ public class Level1 extends Scene {
     BufferedImage wudeczka;
     GameStartedAgainListener gameStartedAgain = new GameStartedAgainListener();
 
-    DrawLevel drawLevel = new DrawLevel();
+    DrawLevel1 drawLevel = new DrawLevel1();
 
     private boolean isGameLost(Snake snake){
         return snake.wallColisionCheckUpdate();
     }
-    public void runGame() {
+    public void runScene() {
 
         running = true;
         leszcz = loadImage("leszcz.png");
         wudeczka = loadImage("wudeczka.png");
-        window = new Window(Game.HEIGHT, Game.WIDTH);
         snake = new Snake();
         items = new ArrayList<>();
         drawLevel.setLayout(null);
+        window.frame.setVisible(true);
 
         for (int i = 0; i < Game.NUMBER_OF_ITEMS; i++) {
             ItemComponent.addItemComponent(items);
         }
-
         window.frame.getContentPane().add(drawLevel);
-
         window.frame.addKeyListener(snake.directionListener);
         window.frame.addKeyListener(gameStartedAgain);
 
@@ -61,10 +59,9 @@ public class Level1 extends Scene {
             }
         }
     }
-    class DrawLevel extends JPanel {
-        @Override
+    public class DrawLevel1 extends DrawScene{
         protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
+           super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
 
             g2d.setColor(Color.PINK);

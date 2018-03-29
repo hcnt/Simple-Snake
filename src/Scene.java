@@ -8,9 +8,19 @@ import java.io.IOException;
 import java.net.URL;
 
 public abstract class Scene {
-    protected Window window;
+    protected Window window = new Window(Game.WIDTH,Game.HEIGHT);
     protected boolean running;
+    public static int activeScene = 1;
 
+
+    public abstract void runScene();
+
+    public abstract class DrawScene extends JPanel{
+        protected void paintComponent(Graphics g){
+            super.paintComponent(g);
+        }
+
+    }
     public BufferedImage loadImage(String file) {
         try {
             URL url = getClass().getResource(file);
@@ -25,6 +35,7 @@ public abstract class Scene {
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
             if (key == 32) {
+
             }
         }
         public void keyReleased(KeyEvent e){}
