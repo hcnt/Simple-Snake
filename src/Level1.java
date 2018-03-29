@@ -6,36 +6,31 @@ import java.util.ArrayList;
 public class Level1 extends Scene {
     private Snake snake;
     private ArrayList<ItemComponent> items;
-    BufferedImage leszcz;
-    BufferedImage wudeczka;
-    GameStartedAgainListener gameStartedAgain = new GameStartedAgainListener();
+    private BufferedImage snakeImage;
+    private BufferedImage itemImage;
 
-    DrawLevel1 drawLevel = new DrawLevel1();
+    private  DrawLevel1 drawLevel = new DrawLevel1();
 
     private boolean isGameLost(Snake snake){
         return snake.wallColisionCheckUpdate();
     }
     public void runScene() {
-
-        running = true;
-        leszcz = loadImage("leszcz.png");
-        wudeczka = loadImage("wudeczka.png");
+        super.runScene();
+        snakeImage = loadImage("leszcz.png");
+        itemImage = loadImage("wudeczka.png");
         snake = new Snake();
         items = new ArrayList<>();
-        drawLevel.setLayout(null);
-        window.frame.setVisible(true);
 
         for (int i = 0; i < Game.NUMBER_OF_ITEMS; i++) {
             ItemComponent.addItemComponent(items);
         }
-        window.frame.getContentPane().add(drawLevel);
-        window.frame.addKeyListener(snake.directionListener);
-        window.frame.addKeyListener(gameStartedAgain);
+        Game.window.frame.getContentPane().add(drawLevel);
+        Game.window.frame.addKeyListener(snake.directionListener);
 
         snake.addComponent(20);
 
+        Game.window.frame.setVisible(true);
         while (running) {
-
             snake.update();
             snake.selfColisionCheckUpdate();
             snake.itemColisionCheckUpdate(items);
@@ -44,18 +39,13 @@ public class Level1 extends Scene {
             drawLevel.repaint();
 
             try {
-                Thread.sleep(Game.DELTA_T_IN_MINISECONDS);
+                Thread.sleep(Game.DELTA_T_IN_MILLISECONDS);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             if (isGameLost(snake)) {
                 running = false;
-                JLabel gameLost = new JLabel();
-                gameLost.setText("You have lost, press space to play again");
-                gameLost.setLocation(Game.WIDTH / 2, Game.HEIGHT / 2);
-                drawLevel.add(gameLost);
-                drawLevel.repaint();
+                Scene.activeScene = 2;
             }
         }
     }
@@ -69,15 +59,15 @@ public class Level1 extends Scene {
 
             g2d.setColor(Color.RED);
             for (ItemComponent c : items) {
-                g2d.drawImage(wudeczka, c.x, c.y, c.size, c.size, this);
-                //g2d.fillRect(c.getX(), c.getY(), c.getSize(), c.getSize());
+                //g2d.drawImage(itemImage, c.x, c.y, c.size, c.size, this);
+                g2d.fillRect(c.getX(), c.getY(), c.getSize(), c.getSize());
             }
             g2d.setColor(Color.BLACK);
             for (SnakeComponent c : snake.getSnakeComponents()) {
-                g2d.drawImage(leszcz, c.getX(), c.getY(), c.getSize() + 5, c.getSize() + 5, this);
-                //g2d.fillRect(c.getX(), c.getY(), c.getSize(), c.getSize());
+                //g2d.drawImage(snakeImage, c.getX(), c.getY(), c.getSize() + 5, c.getSize() + 5, this);
+                g2d.fillRect(c.getX(), c.getY(), c.getSize(), c.getSize());
             }
-            g.drawImage(leszcz, snake.getSnakeHead().getX(), snake.getSnakeHead().getY(), snake.getSnakeHead().getSize() + 5, snake.getSnakeHead().getSize() + 5, this);
+            //g.drawImage(snakeImage, snake.getSnakeHead().getX(), snake.getSnakeHead().getY(), snake.getSnakeHead().getSize() + 5, snake.getSnakeHead().getSize() + 5, this);
         }
     }
 }

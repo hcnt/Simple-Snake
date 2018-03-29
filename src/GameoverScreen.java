@@ -1,7 +1,7 @@
 import javax.swing.*;
 
-public class Menu extends Scene {
-    private JLabel text = new JLabel("welcome to Simple Snake, press space to start");
+public class GameoverScreen extends Scene {
+    private JLabel text = new JLabel("you have lost, press space to start again");
     private GameStartedListener gameListener = new GameStartedListener();
 
     @Override
