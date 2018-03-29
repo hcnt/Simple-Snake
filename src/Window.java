@@ -2,8 +2,6 @@ import javax.swing.*;
 
 public class Window {
     JFrame frame;
-
-
     public Window(){
         frame = new JFrame();
 
@@ -12,7 +10,5 @@ public class Window {
     public Window(int width, int height){
         this();
         frame.setSize(width,height);
-
     }
-
 }

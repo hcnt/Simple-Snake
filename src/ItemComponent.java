@@ -27,5 +27,4 @@ public class ItemComponent extends Component {
             }
         }
     }
-
 }

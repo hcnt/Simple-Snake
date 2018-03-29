@@ -1,3 +1,5 @@
+//todo fix points mechanism
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,6 +10,9 @@ public class Level1 extends Scene {
     private ArrayList<ItemComponent> items;
     private BufferedImage snakeImage;
     private BufferedImage itemImage;
+    public static int points = 0;
+    public static JLabel pointsLabel = new JLabel("Punkty: "+points);
+    GridBagConstraints c = new GridBagConstraints();
 
     private DrawLevel1 drawLevel;
 
@@ -18,6 +23,12 @@ public class Level1 extends Scene {
         super.runScene();
         drawLevel = new DrawLevel1();
         drawLevel.setLayout(new GridBagLayout());
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.weightx = 3;
+        c.weighty = 3;
+        c.gridx = 1;
+        c.gridy = 1;
+        drawLevel.add(pointsLabel,c);
         Game.window.frame.getContentPane().removeAll();
         snakeImage = loadImage("leszcz.png");
         itemImage = loadImage("wudeczka.png");
@@ -39,13 +50,19 @@ public class Level1 extends Scene {
             snake.itemColisionCheckUpdate(items);
             snake.IncrementFramesSinceLastTurn();
 
+
+
             drawLevel.repaint();
 
             if (isGameLost(snake)) {
                 running = false;
                 Scene.activeScene = 2;
+                c.gridy = 2;
+                c.gridx = 2;
                 JLabel label1 = new JLabel("<html><center>Przegranko <br> Naciśnij spacje aby zacząć od nowa</center></html>");
-                drawLevel.add(label1);
+                drawLevel.add(label1,c);
+                points = 0;
+                pointsLabel.setText("Punkty: "+points);
             }
 
             try {

@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class Snake {
     }
 
     public boolean selfColisionCheckUpdate(){
-        for(int i = 40; i< snakeComponents.size(); i++){
+        for(int i = 60; i< snakeComponents.size(); i++){
             if(SnakeComponent.doComponentsColide(snakeHead, snakeComponents.get(i))){
                return true;
             }
@@ -71,30 +72,32 @@ public class Snake {
                 items.remove(i);
                 ItemComponent.addItemComponent(items);
                 addComponent(NUMBER_OF_COMPONENTS_ADDED_AFTER_COLISION_WITH_ITEM);
+                Level1.points++;
+                Level1.pointsLabel.setText("Punkty: "+ Level1.points);
 
             }
         }
     }
     public boolean wallColisionCheckUpdate(){
-        return (snakeHead.x > Game.WIDTH - snakeHead.getSize() ||
-                snakeHead.y > Game.HEIGHT - snakeHead.getSize() ||
-                snakeHead.x < 0 ||
-                snakeHead.y < 0 );
+        return (snakeHead.x >= Game.WIDTH - snakeHead.getSize() ||
+                snakeHead.y >= Game.HEIGHT - snakeHead.getSize() ||
+                snakeHead.x <= 0 ||
+                snakeHead.y <= 0 );
     }
 
     class DirectionChangedListener implements KeyListener {
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
-            if (framesSinceLastTurn > MOVING_FORWARD_FRACTION) {
+            //if (framesSinceLastTurn > 10) {
                 switch (key) {
                     case 37: if (xDirection == 0) { xDirection = -1; yDirection = 0; } break;
                     case 38: if (yDirection == 0) { yDirection = -1;xDirection = 0; }break;
                     case 39: if (xDirection == 0) { xDirection = 1;yDirection = 0; }break;
                     case 40: if (yDirection == 0) { yDirection = 1;xDirection = 0; }break;
                 }
-                framesSinceLastTurn = 0;
-            }
+                //framesSinceLastTurn = 0;
+           // }
         }
         public void keyReleased(KeyEvent e){}
         public void keyTyped(KeyEvent e) { }
