@@ -12,7 +12,6 @@ public abstract class Scene {
     public static int activeScene = 0;
 
     public void runScene(){
-        Game.window.frame.getContentPane().removeAll();
         running = true;
     }
 

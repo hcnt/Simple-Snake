@@ -9,13 +9,16 @@ public class Level1 extends Scene {
     private BufferedImage snakeImage;
     private BufferedImage itemImage;
 
-    private  DrawLevel1 drawLevel = new DrawLevel1();
+    private DrawLevel1 drawLevel;
 
     private boolean isGameLost(Snake snake){
-        return snake.wallColisionCheckUpdate();
+        return (snake.wallColisionCheckUpdate() || snake.selfColisionCheckUpdate());
     }
     public void runScene() {
         super.runScene();
+        drawLevel = new DrawLevel1();
+        drawLevel.setLayout(new GridBagLayout());
+        Game.window.frame.getContentPane().removeAll();
         snakeImage = loadImage("leszcz.png");
         itemImage = loadImage("wudeczka.png");
         snake = new Snake();
@@ -38,21 +41,25 @@ public class Level1 extends Scene {
 
             drawLevel.repaint();
 
+            if (isGameLost(snake)) {
+                running = false;
+                Scene.activeScene = 2;
+                JLabel label1 = new JLabel("<html><center>Przegranko <br> Naciśnij spacje aby zacząć od nowa</center></html>");
+                drawLevel.add(label1);
+            }
+
             try {
                 Thread.sleep(Game.DELTA_T_IN_MILLISECONDS);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (isGameLost(snake)) {
-                running = false;
-                Scene.activeScene = 2;
-            }
+
         }
     }
     public class DrawLevel1 extends DrawScene{
         protected void paintComponent(Graphics g) {
            super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D) g;
+           Graphics2D g2d = (Graphics2D) g;
 
             g2d.setColor(Color.PINK);
             g2d.fillRect(0, 0, 1000, 1000);

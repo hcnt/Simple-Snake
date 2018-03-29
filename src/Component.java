@@ -1,7 +1,7 @@
 public class Component {
     protected int x;
     protected int y;
-    int size = 50;
+    int size = 70;
 
     public int getX() {
         return x;

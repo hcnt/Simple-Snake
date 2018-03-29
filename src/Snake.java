@@ -57,13 +57,13 @@ public class Snake {
         snakeHead.incrementY((snakeHead.getSize()/MOVING_FORWARD_FRACTION) * yDirection);
     }
 
-    public void selfColisionCheckUpdate(){
+    public boolean selfColisionCheckUpdate(){
         for(int i = 40; i< snakeComponents.size(); i++){
             if(SnakeComponent.doComponentsColide(snakeHead, snakeComponents.get(i))){
-                removeComponent(snakeComponents.size() - i);
-
+               return true;
             }
         }
+        return false;
     }
     public void itemColisionCheckUpdate(ArrayList<ItemComponent> items){
         for(int i = 0; i<items.size();i++){

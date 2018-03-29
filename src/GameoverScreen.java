@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class GameoverScreen extends Scene {
     private JLabel text = new JLabel("you have lost, press space to start again");
@@ -7,11 +8,15 @@ public class GameoverScreen extends Scene {
     @Override
     public void runScene() {
         super.runScene();
-        Game.window.frame.getContentPane().add(text);
         Game.window.frame.addKeyListener(gameListener);
         Game.window.frame.setVisible(true);
+        Game.window.frame.repaint();
         while (running) {
-            Game.window.frame.repaint();
+            try {
+                Thread.sleep(1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
