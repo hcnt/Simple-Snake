@@ -17,7 +17,11 @@ public class Menu extends Scene {
         panel.setBackground(Color.PINK);
         Game.window.frame.setVisible(true);
         while (running) {
-            Game.window.frame.repaint();
+            try {
+                Thread.sleep(1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

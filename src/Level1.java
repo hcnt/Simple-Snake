@@ -17,7 +17,7 @@ public class Level1 extends Scene {
     private DrawLevel1 drawLevel;
 
     private boolean isGameLost(Snake snake){
-        return (snake.wallColisionCheckUpdate() || snake.selfColisionCheckUpdate());
+        return (snake.wallColisionCheckUpdate() || snake.selfCollisionCheckUpdate());
     }
     public void runScene() {
         super.runScene();
@@ -32,11 +32,11 @@ public class Level1 extends Scene {
         Game.window.frame.getContentPane().removeAll();
         snakeImage = loadImage("leszcz.png");
         itemImage = loadImage("wudeczka.png");
-        snake = new Snake();
+        snake = new Snake(this);
         items = new ArrayList<>();
 
         for (int i = 0; i < Game.NUMBER_OF_ITEMS; i++) {
-            ItemComponent.addItemComponent(items);
+            addItemComponent(items);
         }
         Game.window.frame.getContentPane().add(drawLevel);
         Game.window.frame.addKeyListener(snake.directionListener);
@@ -46,11 +46,9 @@ public class Level1 extends Scene {
         Game.window.frame.setVisible(true);
         while (running) {
             snake.update();
-            snake.selfColisionCheckUpdate();
-            snake.itemColisionCheckUpdate(items);
+            snake.selfCollisionCheckUpdate();
+            snake.itemCollisionCheckUpdate(items);
             snake.IncrementFramesSinceLastTurn();
-
-
 
             drawLevel.repaint();
 
@@ -71,6 +69,28 @@ public class Level1 extends Scene {
                 e.printStackTrace();
             }
 
+        }
+    }
+    public boolean canThisItemBeAdded(ItemComponent itemToAdd, ArrayList<ItemComponent> items) {
+        for (ItemComponent item : items) {
+            if (ItemComponent.doComponentsColide(item, itemToAdd)) {
+                return false;
+            }
+            for (SnakeComponent component : snake.getSnakeComponents()) {
+                if (ItemComponent.doComponentsColide(component, itemToAdd)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public void addItemComponent(ArrayList<ItemComponent> items){
+        while(true) {
+            ItemComponent itemToAdd = new ItemComponent();
+            if(canThisItemBeAdded(itemToAdd,items)){
+                items.add(itemToAdd);
+                break;
+            }
         }
     }
     public class DrawLevel1 extends DrawScene{

@@ -13,6 +13,7 @@ public class Snake {
     public static final int MOVING_FORWARD_FRACTION = 15;
     private final int X_POSITION_OF_FIRST_COMPONENT = 100;
     private final int Y_POSITION_OF_FIRST_COMPONENT = 50;
+    private Level1 currentScene; //i know it's bad, will be fixed later
 
     DirectionChangedListener directionListener = new DirectionChangedListener();
 
@@ -28,10 +29,11 @@ public class Snake {
         framesSinceLastTurn++;
     }
 
-    public Snake() {
+    public Snake(Level1 currentScene) {
         snakeComponents.add(new SnakeComponent(X_POSITION_OF_FIRST_COMPONENT,Y_POSITION_OF_FIRST_COMPONENT));
         snakeComponents.add(new SnakeComponent(X_POSITION_OF_FIRST_COMPONENT-30,Y_POSITION_OF_FIRST_COMPONENT));
         snakeHead = snakeComponents.get(0);
+        this.currentScene = currentScene;
     }
 
 
@@ -58,7 +60,7 @@ public class Snake {
         snakeHead.incrementY((snakeHead.getSize()/MOVING_FORWARD_FRACTION) * yDirection);
     }
 
-    public boolean selfColisionCheckUpdate(){
+    public boolean selfCollisionCheckUpdate(){
         for(int i = 60; i< snakeComponents.size(); i++){
             if(SnakeComponent.doComponentsColide(snakeHead, snakeComponents.get(i))){
                return true;
@@ -66,11 +68,11 @@ public class Snake {
         }
         return false;
     }
-    public void itemColisionCheckUpdate(ArrayList<ItemComponent> items){
+    public void itemCollisionCheckUpdate(ArrayList<ItemComponent> items){
         for(int i = 0; i<items.size();i++){
             if(SnakeComponent.doComponentsColide(snakeHead, items.get(i))){
                 items.remove(i);
-                ItemComponent.addItemComponent(items);
+                currentScene.addItemComponent(items);
                 addComponent(NUMBER_OF_COMPONENTS_ADDED_AFTER_COLISION_WITH_ITEM);
                 Level1.points++;
                 Level1.pointsLabel.setText("Punkty: "+ Level1.points);
