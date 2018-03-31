@@ -10,7 +10,7 @@ public class Snake {
     private int yDirection = 0;
     private int framesSinceLastTurn = 0;
     private final int NUMBER_OF_COMPONENTS_ADDED_AFTER_COLISION_WITH_ITEM = 20;
-    public static final int MOVING_FORWARD_FRACTION = 15;
+    private static final int MOVING_FORWARD_FRACTION = 15;
     private final int X_POSITION_OF_FIRST_COMPONENT = 100;
     private final int Y_POSITION_OF_FIRST_COMPONENT = 50;
     private Level1 currentScene; //i know it's bad, will be fixed later
@@ -52,6 +52,7 @@ public class Snake {
     }
 
     public void update() {
+        //System.out.println(snakeHead.y);
         for (int i = snakeComponents.size()-1; i > 0; i--) {
             snakeComponents.get(i).setX(snakeComponents.get(i-1).getX());
             snakeComponents.get(i).setY(snakeComponents.get(i-1).getY());
@@ -81,8 +82,8 @@ public class Snake {
         }
     }
     public boolean wallColisionCheckUpdate(){
-        return (snakeHead.x >= Game.WIDTH - snakeHead.getSize() ||
-                snakeHead.y >= Game.HEIGHT - snakeHead.getSize() ||
+        return (snakeHead.x >= Game.WIDTH - snakeHead.getSize()-5 ||
+                snakeHead.y >= Game.HEIGHT - snakeHead.getSize()-35 ||
                 snakeHead.x <= 0 ||
                 snakeHead.y <= 0 );
     }
